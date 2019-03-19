@@ -31,7 +31,7 @@ module.exports = function (gruntOrShipit) {
     function installDependencies() {
       var relativeReleasePath = path.join('releases', shipit.releaseDirname);
 
-      return shipit.remote('cd ' + shipit.config.deployTo + relativeReleasePath + ' && npm install')
+      return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ' && npm install')
         .then(function () {
           shipit.log(chalk.green('Dependencies installed.'));
         });
@@ -44,7 +44,7 @@ module.exports = function (gruntOrShipit) {
     function buildMobile() {
       var relativeReleasePath = path.join('releases', shipit.releaseDirname);
 
-      return shipit.remote('cd ' + shipit.config.deployTo + relativeReleasePath + ' && npm run build-mobile-' + shipit.environment)
+      return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ' && npm run build-mobile-' + shipit.environment)
         .then(function () {
           shipit.log(chalk.green('Mobile version is built.'));
         });
@@ -57,7 +57,7 @@ module.exports = function (gruntOrShipit) {
     function buildDesktop() {
       var relativeReleasePath = path.join('releases', shipit.releaseDirname);
 
-      return shipit.remote('cd ' + shipit.config.deployTo + relativeReleasePath + ' && npm run build-desktop-' + shipit.environment)
+      return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ' && npm run build-desktop-' + shipit.environment)
         .then(function () {
           shipit.log(chalk.green('Desktop version is built.'));
         });
