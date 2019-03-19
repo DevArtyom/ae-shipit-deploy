@@ -6,8 +6,7 @@ var _ = require('lodash');
 /**
  * Build task.
  * - Install dependencies.
- * - Build mobile version.
- * - Build desktop version.
+ * - Build.
  */
 
 module.exports = function (gruntOrShipit) {
@@ -18,8 +17,7 @@ module.exports = function (gruntOrShipit) {
     _.assign(shipit.constructor.prototype, require('../../lib/shipit'));
 
     return installDependencies()
-      .then(buildMobile)
-      .then(buildDesktop)
+      .then(build)
       .then(function () {
         shipit.emit('built');
       });
@@ -38,28 +36,15 @@ module.exports = function (gruntOrShipit) {
     }
 
     /**
-     * Build mobile version.
+     * Build.
      */
 
-    function buildMobile() {
+    function build() {
       var relativeReleasePath = path.join('releases', shipit.releaseDirname);
 
-      return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ' && npm run build-mobile-' + shipit.environment)
+      return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ' && npm run build-' + shipit.environment)
         .then(function () {
           shipit.log(chalk.green('Mobile version is built.'));
-        });
-    }
-
-    /**
-     * Build desktop version.
-     */
-
-    function buildDesktop() {
-      var relativeReleasePath = path.join('releases', shipit.releaseDirname);
-
-      return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ' && npm run build-desktop-' + shipit.environment)
-        .then(function () {
-          shipit.log(chalk.green('Desktop version is built.'));
         });
     }
   }
