@@ -44,7 +44,7 @@ module.exports = function (gruntOrShipit) {
 
       return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ' && npm run build-' + shipit.environment)
         .then(function () {
-          shipit.log(chalk.green('Mobile version is built.'));
+          shipit.log(chalk.green('App has been built.'));
         });
     }
   }
