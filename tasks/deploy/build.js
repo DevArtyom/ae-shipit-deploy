@@ -42,10 +42,17 @@ module.exports = function (gruntOrShipit) {
     function build() {
       var relativeReleasePath = path.join('releases', shipit.releaseDirname);
 
-      return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ' && npm run build-' + shipit.environment)
-        .then(function () {
-          shipit.log(chalk.green('App has been built.'));
-        });
+      if (process.env.CLIENT) {
+        return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ` && NODE_ENV=production CLIENT=${process.env.CLIENT} nuxt build --no-lock`)
+          .then(function () {
+            shipit.log(chalk.green('App has been built.'));
+          });
+      } else {
+        return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ' && npm run build-' + shipit.environment)
+          .then(function () {
+            shipit.log(chalk.green('App has been built.'));
+          });
+      }
     }
   }
 };
