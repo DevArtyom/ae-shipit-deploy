@@ -43,7 +43,7 @@ module.exports = function (gruntOrShipit) {
       var relativeReleasePath = path.join('releases', shipit.releaseDirname);
 
       if (process.env.CLIENT) {
-        return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ` && NODE_ENV=production CLIENT=${process.env.CLIENT} node_modules/nuxt/bin/nuxt build --no-lock`)
+        return shipit.remote('cd ' + shipit.config.deployTo + '/' + relativeReleasePath + ` && NODE_ENV=production CLIENT=${process.env.CLIENT} node_modules/nuxt/bin/nuxt.js build --no-lock`)
           .then(function () {
             shipit.log(chalk.green('App has been built.'));
           });
